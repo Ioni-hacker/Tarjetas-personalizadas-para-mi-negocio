@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITULO_PERSONALIZADO}}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+      background: #fcb6b6 url('images/{{IMAGEN_FONDO}}') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .floating-stars {
+      position: absolute;
+      z-index: 1;
+      font-size: 2rem;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 2px 8px #fff6);
+      transition: transform 6s linear, opacity 6s linear;
+    }
+
+    .card-panel {
+      position: relative;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 90vw;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1s ease-out;
+    }
+
+    .card-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .card-message {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .card-signature {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        background-attachment: scroll;
+        background-size: cover;
+      }
+      
+      .card-panel {
+        max-width: 95vw;
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+      
+      .card-title {
+        font-size: 2rem;
+      }
+      
+      .card-message {
+        font-size: 1.1rem;
+      }
+      
+      .card-signature {
+        font-size: 1rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Estrellas flotantes -->
+  <div id="stars-bg"></div>
+
+  <!-- Panel principal -->
+  <div class="card-panel">
+    <h1 class="card-title">{{TITULO_PERSONALIZADO}}</h1>
+    <p class="card-message">{{MENSAJE_PERSONALIZADO}}</p>
+    <p class="card-signature">{{FIRMA_PERSONALIZADA}}</p>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="music/{{ARCHIVO_MUSICA}}" type="audio/mpeg">
+    <source src="music/{{ARCHIVO_MUSICA_OGG}}" type="audio/ogg">
+    <source src="music/{{ARCHIVO_MUSICA_WAV}}" type="audio/wav">
+  </audio>
+
+  <script>
+    // Estrellas flotantes animadas
+    function crearEstrella() {
+      const star = document.createElement("span");
+      star.className = "floating-stars";
+      const emojis = ["✨", "⭐", "🌟", "💫", "🌠", "⭐", "✨"];
+      star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.top = "100vh";
+      star.style.fontSize = (Math.random() * 20 + 24) + "px";
+      star.style.opacity = Math.random() * 0.6 + 0.4;
+      document.getElementById("stars-bg").appendChild(star);
+      
+      setTimeout(() => {
+        star.style.transform = `translateY(-110vh) rotate(360deg)`;
+        star.style.opacity = 0;
+      }, 100);
+      
+      setTimeout(() => star.remove(), 6200);
+    }
+    
+    setInterval(crearEstrella, 800);
+
+    // Música de fondo
+    const audio = document.getElementById('bg-music');
+    let musicStarted = false;
+    
+    function startMusic() {
+      if (!musicStarted) {
+        audio.play().then(() => {
+          console.log('Música iniciada correctamente');
+          musicStarted = true;
+        }).catch((error) => {
+          console.log('Error al reproducir música:', error);
+        });
+      }
+    }
+    
+    // Múltiples eventos para asegurar que la música inicie
+    document.body.addEventListener('click', startMusic);
+    document.body.addEventListener('touchstart', startMusic);
+    document.body.addEventListener('pointerdown', startMusic);
+    
+    // Intentar iniciar música después de un pequeño delay
+    setTimeout(() => {
+      document.body.addEventListener('load', startMusic);
+    }, 1000);
+  </script>
+</body>
+</html>

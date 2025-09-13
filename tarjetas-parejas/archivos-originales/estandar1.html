@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google Fonts para Pacifico y Quicksand -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Ti ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 7vh;
+      /* Cambia la URL de la imagen aquí */
+  /* Cambia la ruta a tu imagen personalizada en la carpeta images */
+  /* Fondo más oscuro y menos rosado, imagen más visible */
+  background: linear-gradient(135deg, rgba(20,20,20,0.65) 60%, rgba(40,40,40,0.7)), url('images/davidlucy.gif') no-repeat center center fixed;
+      background-size: cover;
+  font-family: 'Quicksand', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+  background: rgba(36, 36, 36, 0.78);
+    padding: 30px 20px;
+    border-radius: 22px;
+    box-shadow: 0 0 16px 4px #62598d, 0 0 32px 8px #fff6;
+    border: 2.5px solid #7b729e;
+    text-align: center;
+    max-width: 95vw;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 2s ease-in-out;
+    backdrop-filter: blur(2px);
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 18px 6px;
+        font-size: 0.95rem;
+        max-width: 98vw;
+        margin-top: 4vh;
+      }
+      .card h1 {
+        font-size: 1.3rem;
+      }
+      .card p {
+        font-size: 1rem;
+      }
+    }
+
+    .card h1 {
+    color: #cfade9;
+    font-size: 2.1rem;
+    margin-bottom: 10px;
+    font-family: 'Pacifico', 'Segoe Script', cursive;
+    letter-spacing: 1.5px;
+    }
+
+    .card p {
+    font-size: 1.15rem;
+    color: #ffffff;
+    font-family: 'Quicksand', 'Segoe UI', sans-serif;
+    margin-top: 12px;
+    }
+
+    /* Animación corazones */
+    .star {
+      position: absolute;
+      bottom: -50px;
+      color: #ffd700;
+      font-size: 32px;
+      opacity: 0.7;
+      animation: floatUp 7s linear infinite;
+      filter: drop-shadow(0 0 6px #fff7b2);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Música de fondo, inicia con el primer toque en cualquier parte de la pantalla, sin mostrar mensaje -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="music/lucydavid.mp3" type="audio/mpeg">
+    <source src="music/lucydavid.ogg" type="audio/ogg">
+    <source src="music/lucydavid.wav" type="audio/wav">
+  </audio>
+  <script>
+    const audio = document.getElementById('bg-music');
+    let musicStarted = false;
+    
+    function startMusic() {
+      if (!musicStarted) {
+        audio.play().then(() => {
+          console.log('Música iniciada correctamente');
+          musicStarted = true;
+        }).catch((error) => {
+          console.log('Error al reproducir música:', error);
+        });
+      }
+    }
+    
+    // Múltiples eventos para asegurar que la música inicie
+    document.body.addEventListener('click', startMusic);
+    document.body.addEventListener('touchstart', startMusic);
+    document.body.addEventListener('pointerdown', startMusic);
+  </script>
+
+  <div class="card">
+    <h1>Para ella</h1>
+    <p>Nunca es tarde para cumplir tu promesa de llevarla a la luna y regresar.🌙🚀
+    </p>
+  </div>
+
+  <!-- estrellas flotando -->
+  <span class="star" style="left:12%;">★</span>
+  <span class="star" style="left:28%; animation-delay: 2s;">✦</span>
+  <span class="star" style="left:53%; animation-delay: 4s;">★</span>
+  <span class="star" style="left:68%; animation-delay: 1s;">✦</span>
+  <span class="star" style="left:85%; animation-delay: 3s;">★</span>
+</body>
+</html>

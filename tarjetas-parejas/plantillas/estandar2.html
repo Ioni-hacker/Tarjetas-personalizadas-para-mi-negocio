@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITULO_PERSONALIZADO}}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+      background: #fcb6b6 url('images/{{IMAGEN_FONDO}}') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .floating-hearts {
+      position: absolute;
+      z-index: 1;
+      font-size: 2rem;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 2px 8px #fff6);
+      transition: transform 8s linear, opacity 8s linear;
+    }
+
+    .card-container {
+      position: relative;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      border-radius: 25px;
+      padding: 3rem 2.5rem;
+      max-width: 85vw;
+      max-height: 85vh;
+      overflow-y: auto;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(252, 182, 182, 0.4);
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      animation: slideInUp 1.2s ease-out;
+    }
+
+    .card-title {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-style: italic;
+    }
+
+    .card-message {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.95);
+      text-align: justify;
+    }
+
+    .card-footer {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 1.5rem;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        background-attachment: scroll;
+        background-size: cover;
+      }
+      
+      .card-container {
+        max-width: 95vw;
+        max-height: 90vh;
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+      
+      .card-title {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .card-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .card-message {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+      
+      .card-footer {
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+      }
+    }
+
+    @keyframes slideInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(50px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Corazones flotantes -->
+  <div id="hearts-bg"></div>
+
+  <!-- Contenedor principal -->
+  <div class="card-container">
+    <h1 class="card-title">{{TITULO_PERSONALIZADO}}</h1>
+    <h2 class="card-subtitle">{{SUBTITULO_PERSONALIZADO}}</h2>
+    <div class="card-message">{{MENSAJE_PERSONALIZADO}}</div>
+    <div class="card-footer">{{PIE_PERSONALIZADO}}</div>
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="music/{{ARCHIVO_MUSICA}}" type="audio/mpeg">
+    <source src="music/{{ARCHIVO_MUSICA_OGG}}" type="audio/ogg">
+    <source src="music/{{ARCHIVO_MUSICA_WAV}}" type="audio/wav">
+  </audio>
+
+  <script>
+    // Corazones flotantes animados
+    function crearCorazon() {
+      const heart = document.createElement("span");
+      heart.className = "floating-hearts";
+      const emojis = ["❤", "💖", "💞", "💗", "✨", "💝", "💓", "💘", "🌹", "💐"];
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = "100vh";
+      heart.style.fontSize = (Math.random() * 25 + 20) + "px";
+      heart.style.opacity = Math.random() * 0.7 + 0.3;
+      heart.style.animationDelay = Math.random() * 2 + "s";
+      document.getElementById("hearts-bg").appendChild(heart);
+      
+      setTimeout(() => {
+        heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
+        heart.style.opacity = 0;
+      }, 100);
+      
+      setTimeout(() => heart.remove(), 8200);
+    }
+    
+    setInterval(crearCorazon, 700);
+
+    // Música de fondo
+    const audio = document.getElementById('bg-music');
+    let musicStarted = false;
+    
+    function startMusic() {
+      if (!musicStarted) {
+        audio.play().then(() => {
+          console.log('Música iniciada correctamente');
+          musicStarted = true;
+        }).catch((error) => {
+          console.log('Error al reproducir música:', error);
+        });
+      }
+    }
+    
+    // Múltiples eventos para asegurar que la música inicie
+    document.body.addEventListener('click', startMusic);
+    document.body.addEventListener('touchstart', startMusic);
+    document.body.addEventListener('pointerdown', startMusic);
+    
+    // Intentar iniciar música después de un pequeño delay
+    setTimeout(() => {
+      document.body.addEventListener('load', startMusic);
+    }, 1000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITULO_PERSONALIZADO}}</title>
+  <style>
+    /* Forzar ocultamiento del botón en móvil cuando la carta está abierta */
+    .modal-carta.abierta .btn-abrir {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      z-index: -1 !important;
+    }
+    /* Centrado vertical y horizontal del bloque imagen+panel */
+    .modal-carta-content .modal-bloque {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+    }
+    /* Ajuste global para evitar desbordes y centrar todo en móvil */
+    @media (max-width: 600px) {
+      body {
+        background-size: cover !important;
+        background-attachment: scroll !important;
+        overflow-x: hidden !important;
+      }
+      .modal-carta {
+        display: none !important;
+      }
+      .modal-carta.abierta {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        min-height: 100vh !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 1000 !important;
+        background: rgba(0,0,0,0.5) !important;
+      }
+      .modal-carta-content {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        min-width: 0 !important;
+        margin: 0 auto !important;
+        padding: 4vw 0 4vw 0 !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+      }
+      .modal-bloque {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .modal-panel {
+        max-width: 96vw !important;
+        width: 96vw !important;
+        min-width: 0 !important;
+        padding: 4vw 2vw 3vw 2vw !important;
+        font-size: 1rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+      }
+      .modal-carta-content img.modal-foto {
+        width: 96vw !important;
+        height: auto !important;
+        max-width: 96vw !important;
+        max-height: 60vw !important;
+        padding: 2vw !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important;
+        transform: translateX(-8vw) !important;
+      }
+      .btn-abrir {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 10 !important;
+        font-size: 1.2rem !important;
+        padding: 12px 12vw !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+    }
+    .modal-carta-content {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px #eaa4b6, 0 0 0 2px #fcb6b6 inset;
+      padding: 28px 22px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 90vw;
+      min-width: 220px;
+      animation: fadeIn 0.7s;
+      position: relative;
+    }
+    .modal-carta {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-panel {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px #eaa4b6cc;
+      border: 2px solid #fcb6b6;
+      padding: 18px 16px 12px 16px;
+      margin-top: 6px;
+      margin-bottom: 0;
+      max-width: 350px;
+      min-width: 180px;
+      text-align: center;
+      z-index: 2;
+    }
+    .modal-carta-content img.modal-foto {
+      width: 400px !important;
+      height: 400px !important;
+      max-width: 400px !important;
+      max-height: 400px !important;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px #eaa4b6;
+      border: 4px solid #fff;
+      background: linear-gradient(135deg, #fcb6b6 0%, #fff 60%, #eaa4b6 100%);
+      padding: 6px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .floating-heart {
+      position: absolute;
+      z-index: 1;
+      font-size: 2rem;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 2px 8px #fff6);
+      transition: transform 6s linear, opacity 6s linear;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-width: 100vw;
+      background: #fcb6b6 url('images/{{IMAGEN_FONDO}}') no-repeat center center fixed;
+      background-size: contain;
+      background-repeat: no-repeat;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-abrir {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      color: #d72660;
+      border: 2px solid #fcb6b6;
+      border-radius: 18px;
+      font-size: 2rem;
+      font-family: 'Segoe Script', 'Comic Sans MS', cursive;
+      font-weight: bold;
+      padding: 18px 48px;
+      box-shadow: 0 2px 24px #fcb6b6cc, 0 0 32px #fff6;
+      cursor: pointer;
+      z-index: 20;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      opacity: 0.97;
+      letter-spacing: 2px;
+      outline: none;
+    }
+    .btn-abrir:hover, .btn-abrir:focus {
+      background: #fcb6b6;
+      color: #fff;
+      transform: translate(-50%, -50%) scale(1.07);
+      border-color: #d72660;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Corazones flotando -->
+  <div id="hearts-bg"></div>
+
+  <!-- Botón abrir en el centro de la carta -->
+  <button id="btnAbrir" class="btn-abrir">Abrir</button>
+  <div class="modal-carta" id="modalCarta" style="display:none;">
+    <div class="modal-carta-content" id="modalContent" style="display:none;">
+      <div class="modal-bloque">
+        <img src="images/{{FOTO_PAREJA}}" alt="Foto de {{NOMBRE_CLIENTE}}" class="modal-foto" />
+        <div class="modal-panel">
+          <p class="modal-mensaje">{{MENSAJE_PERSONALIZADO}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Corazones flotando animados
+    function crearCorazon() {
+      const heart = document.createElement("span");
+      heart.className = "floating-heart";
+      const emojis = ["❤", "💖", "💞", "💗", "✨", "💝", "💓", "💘"];
+      heart.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.top = "100vh";
+      heart.style.fontSize = (Math.random() * 18 + 28) + "px";
+      heart.style.opacity = Math.random() * 0.5 + 0.5;
+      document.getElementById("hearts-bg").appendChild(heart);
+      setTimeout(() => {
+        heart.style.transform = `translateY(-110vh)`;
+        heart.style.opacity = 0;
+      }, 100);
+      setTimeout(() => heart.remove(), 6200);
+    }
+    setInterval(crearCorazon, 600);
+
+    // Mostrar modal al presionar "Abrir"
+    const btnAbrir = document.getElementById('btnAbrir');
+    const modalCarta = document.getElementById('modalCarta');
+    const modalContent = document.getElementById('modalContent');
+    btnAbrir.addEventListener('click', abrirCarta);
+    btnAbrir.addEventListener('keydown', function(e){if(e.key==='Enter'){abrirCarta();}});
+
+    function abrirCarta() {
+      btnAbrir.style.display = 'none !important';
+      btnAbrir.style.visibility = 'hidden';
+      btnAbrir.style.opacity = '0';
+      modalCarta.style.display = 'flex';
+      modalCarta.classList.add('abierta');
+      setTimeout(()=>{
+        modalContent.style.display = 'flex';
+        btnAbrir.remove();
+      }, 350);
+    }
+  </script>
+
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="music/{{ARCHIVO_MUSICA}}" type="audio/mpeg">
+    <source src="music/{{ARCHIVO_MUSICA_OGG}}" type="audio/ogg">
+    <source src="music/{{ARCHIVO_MUSICA_WAV}}" type="audio/wav">
+  </audio>
+  <script>
+    const audio = document.getElementById('bg-music');
+    let musicStarted = false;
+    
+    function startMusic() {
+      if (!musicStarted) {
+        audio.play().then(() => {
+          console.log('Música iniciada correctamente');
+          musicStarted = true;
+        }).catch((error) => {
+          console.log('Error al reproducir música:', error);
+        });
+      }
+    }
+    
+    // Múltiples eventos para asegurar que la música inicie
+    document.body.addEventListener('click', startMusic);
+    document.body.addEventListener('touchstart', startMusic);
+    document.body.addEventListener('pointerdown', startMusic);
+    btnAbrir.addEventListener('click', startMusic);
+  </script>
+</body>
+</html>

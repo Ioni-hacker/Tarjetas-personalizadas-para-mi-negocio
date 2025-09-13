@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjeta - Carta Realista</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+      overflow: hidden;
+      font-family: 'Segoe Script', cursive;
+    }
+
+    /* Contenedor de la carta */
+    .carta {
+      position: relative;
+      width: 280px;
+      height: 190px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .carta-inner {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+    .carta.abierta .carta-inner {
+      transform: rotateX(180deg);
+    }
+
+    /* Frente (sobre cerrado realista) */
+    .frente {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border: 3px solid #d45a5a;
+      border-radius: 8px;
+      backface-visibility: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      background: linear-gradient(145deg, #fff 0%, #fbeaea 100%);
+      position: relative;
+    }
+
+    /* Pliegue triangular */
+    .frente::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(145deg, #ffdcdc, #fff);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-bottom: 2px solid #d45a5a;
+    }
+
+    /* Sello en relieve */
+    .sello {
+      position: absolute;
+      bottom: 25%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle at 30% 30%, #d94c4c, #8b0000);
+      border-radius: 50%;
+      border: 4px solid #5a0000;
+      box-shadow: 
+        0 4px 8px rgba(0,0,0,0.5),
+        inset 2px 2px 6px rgba(255,255,255,0.5),
+        inset -3px -3px 6px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #fff;
+      font-weight: bold;
+      z-index: 5;
+    }
+
+    /* Interior (mensaje) */
+    .contenido {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fffaf0;
+      border: 3px solid #d45a5a;
+      border-radius: 8px;
+      backface-visibility: hidden;
+      transform: rotateX(180deg);
+      padding: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #b71c1c;
+      box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Corazones flotando */
+    .detalle {
+      position: absolute;
+      font-size: 1.3rem;
+      animation: flotar linear infinite;
+      opacity: 0.9;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(100vh) scale(0.7); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .carta { width: 220px; height: 150px; }
+      .contenido { font-size: 1rem; padding: 15px; }
+      .sello { width: 45px; height: 45px; font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="carta" id="carta">
+    <div class="carta-inner">
+      <div class="frente">
+        <div class="sello">❤</div>
+      </div>
+      <div class="contenido">Cada palabra mía lleva un pedacito de mi corazón para ti ❤️</div>
+    </div>
+  </div>
+
+  <script>
+    // Abrir/cerrar carta al clic
+    const carta = document.getElementById("carta");
+    carta.addEventListener("click", () => {
+      carta.classList.toggle("abierta");
+    });
+
+    // Corazones rojos ❤️
+    function crearDetalle() {
+      const detalle = document.createElement("div");
+      detalle.classList.add("detalle");
+      detalle.textContent = "❤️";
+      detalle.style.left = Math.random() * 100 + "vw";
+      detalle.style.animationDuration = (4 + Math.random() * 5) + "s";
+      detalle.style.fontSize = (18 + Math.random() * 28) + "px";
+      document.body.appendChild(detalle);
+
+      setTimeout(() => detalle.remove(), 9000);
+    }
+
+    setInterval(crearDetalle, 700);
+  </script>
+</body>
+</html>
