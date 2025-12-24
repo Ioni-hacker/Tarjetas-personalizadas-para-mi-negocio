@@ -29,18 +29,6 @@
       z-index: -2;
       pointer-events: none;
     }
-      @media (max-width: 600px) {
-        .video-bg {
-          height: 60vh;
-          width: 100vw;
-          top: 0;
-          left: 0;
-          object-fit: cover;
-        }
-        .overlay-bg {
-          height: 60vh;
-        }
-      }
 
     .overlay-bg {
       position: fixed;
@@ -73,17 +61,25 @@
       }
       .card {
         padding: 10px 4px;
-        font-size: 0.85rem;
+        font-size: 0.62rem;
         max-width: 85vw;
-        margin-top: 8vh;
+        width: 85vw;
+        min-height: 40vh;
+        max-height: 70vh;
+        margin: 6vh auto 0 auto;
         border-radius: 16px;
-        box-shadow: 0 0 8px 2px #62598d, 0 0 16px 4px #fff6;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
       }
       .card h1 {
-        font-size: 1.05rem;
+        font-size: 0.62rem;
       }
       .card p {
-        font-size: 0.9rem;
+        font-size: 0.62rem;
+        line-height: 1.13;
       }
     }
 
@@ -169,10 +165,8 @@
       La que no necesita un espectro patronum para auyentar sus dementores.
       La que con su sola presencia convierte lo ordinario en extraordinario.
       La mayor fan de harry potter que conozco.
-      Esa eres tu. Gracias por ser mi amiga, maldita fea.
-
-    </p>
-    <h1>Felices fiestas idiota ❤</h1>
+      Esa eres tu. Gracias por ser mi amiga, maldita fea.</p>
+      <h1>Felices fiestas idiota ❤</h1>
   </div>
 
   <!-- estrellas flotando -->
