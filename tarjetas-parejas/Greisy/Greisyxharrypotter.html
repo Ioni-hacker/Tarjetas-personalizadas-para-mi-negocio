@@ -29,6 +29,18 @@
       z-index: -2;
       pointer-events: none;
     }
+      @media (max-width: 600px) {
+        .video-bg {
+          height: 60vh;
+          width: 100vw;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+        }
+        .overlay-bg {
+          height: 60vh;
+        }
+      }
 
     .overlay-bg {
       position: fixed;
@@ -60,16 +72,18 @@
         padding-top: 6vh;
       }
       .card {
-        padding: 18px 6px;
-        font-size: 0.95rem;
-        max-width: 98vw;
-        margin-top: 0;
+        padding: 10px 4px;
+        font-size: 0.85rem;
+        max-width: 85vw;
+        margin-top: 8vh;
+        border-radius: 16px;
+        box-shadow: 0 0 8px 2px #62598d, 0 0 16px 4px #fff6;
       }
       .card h1 {
-        font-size: 1.3rem;
+        font-size: 1.05rem;
       }
       .card p {
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
     }
 
